@@ -8,6 +8,7 @@ const {
 	decodeAuthCredentials,
 	timeout,
 } = require("./utils")
+const e = require("express")
 
 const config = {
 	port: 9001,
@@ -53,13 +54,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
  
 
 
-})
 
-app.get("authorize", (req, res) => {
+app.get("/authorize", (req, res) => {
 	const clientId = req.query.client_id
 	const client = clients[clientId]
 	if(!client){
 		res.status(401).send("Error: client not authorized")
+		return
+	}
+	else{
+		res.status(200)
 		return
 	}
 	if (
@@ -74,14 +78,14 @@ app.get("authorize", (req, res) => {
 	requests[requestid] = req.query
 	res.render("login", {
 		client,
-		scope:req,query.scope,
+		scope:req.query.scope,
 		requestId,
 	})
 })
 
 app.post("/approve", (req, res) => {
 	const { userName, password, requestId } = req.body
-	if (!userName || users[username] !== password){
+	if (!userName || users[usernName] !== password){
 		res.status(401).send("Error`: user not authorized")
 		return
 
