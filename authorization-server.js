@@ -50,9 +50,45 @@ app.use(timeout)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-/*
-Your code here
-*/
+ 
+
+
+})
+
+app.get("authorize", (req, res) => {
+	const clientId = req.query.client_id
+	const client = clients[clientId]
+	if(!client){
+		res.status(401).send("Error: client not authorized")
+		return
+	}
+	if (
+		typeof req.query.scope !== "string" ||
+		!containsAll(client.scopes, req.query.scopes.split(" "))
+	){
+		res.status(401).send("Error: invalid scopes requested")
+		return
+	}
+
+	const requestId = randomString()
+	requests[requestid] = req.query
+	res.render("login", {
+		client,
+		scope:req,query.scope,
+		requestId,
+	})
+})
+
+app.post("/approve", (req, res) => {
+	const { userName, password, requestId } = req.body
+	if (!userName || users[username] !== password){
+		res.status(401).send("Error`: user not authorized")
+		return
+
+	}
+})
+
+
 
 
 const server = app.listen(config.port, "localhost", function () {
