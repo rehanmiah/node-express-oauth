@@ -68,7 +68,7 @@ app.get("/authorize", (req, res) => {
 	}
 	if (
 		typeof req.query.scopes !== "string" ||
-		!containsAll(client.scopes, req.query.scopes.split(" "))
+		!containsAll(client.scopes, req.query.scope.split(" "))
 	){
 		res.status(401).send("Error: invalid scopes requested")
 		return
