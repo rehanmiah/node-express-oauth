@@ -74,7 +74,7 @@ app.get("/authorize", (req, res) => {
 	}
 
 	const requestId = randomString()
-	requests[requestid] = req.query
+	requests[requestId] = req.query
 	res.render("login", {
 		client,
 		scope: req.query.scope,
