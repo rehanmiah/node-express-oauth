@@ -54,9 +54,42 @@ app.use(bodyParser.urlencoded({ extended: true }))
  
 
 
+app.get("/authorize", (req, res) => {
+	const clientId = req.query.client_id
+	const client = clients[clientId]
+	if(!client){
+		res.status(401).send("Error: client not authorized")
+		return
+	}
+	else{
+		res.status(200)
+		return
+	}
+	if (
+		typeof req.query.scopes !== "string" ||
+		!containsAll(client.scopes, req.query.scope.split(" "))
+	){
+		res.status(401).send("Error: invalid scopes requested")
+		return
+	}
 
+	const requestId = randomString()
+	requests[requestid] = req.query
+	res.render("login", {
+		client,
+		scope: req.query.scope,
+		requestId,
+	})
+})
 
+app.post("/approve", (req, res) => {
+	const { userName, password, requestId } = req.body
+	if (!userName || users[userName] !== password){
+		res.status(401).send("Error`: user not authorized")
+		return
 
+	}
+})
 
 
 
