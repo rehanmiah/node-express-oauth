@@ -53,6 +53,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
  
 
+app.get("/authorize")
 
 
 app.get("/authorize", (req, res) => {
@@ -78,14 +79,14 @@ app.get("/authorize", (req, res) => {
 	requests[requestid] = req.query
 	res.render("login", {
 		client,
-		scope:req.query.scope,
+		scope: req.query.scope,
 		requestId,
 	})
 })
 
 app.post("/approve", (req, res) => {
 	const { userName, password, requestId } = req.body
-	if (!userName || users[usernName] !== password){
+	if (!userName || users[userName] !== password){
 		res.status(401).send("Error`: user not authorized")
 		return
 
