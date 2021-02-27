@@ -89,6 +89,12 @@ app.post("/approve", (req, res) => {
 		return
 
 	}
+	const clientReq = requests[requestId]
+	delete requests[requestId]
+	if(!ClientReq){
+		res.status(401).send("Error:invalide user resuest")
+		return
+	}
 })
 
 
