@@ -53,8 +53,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
  
 
-app.get("/authorize")
-
 
 app.get("/authorize", (req, res) => {
 	const clientId = req.query.client_id
